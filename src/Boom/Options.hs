@@ -10,7 +10,7 @@ type List = String
 type Key = String
 type Value = String
 
-data Options = Options String Command
+data Options = Options Command
 data Command
         = All
         | Edit
@@ -26,18 +26,13 @@ withInfo :: Parser a -> String -> ParserInfo a
 withInfo opts desc = info (helper <*> opts) $ progDesc desc
 
 parseOptions :: Parser Options
-parseOptions = Options <$> parseApp <*> parseCommand
-
-parseApp :: Parser String
-parseApp = strOption $
-    short 'a' <> long "app" <> metavar "COMPILE-APP" <>
-    help "Heroku app on which to compile"
+parseOptions = Options <$> parseCommand
 
 parseCommand :: Parser Command
 parseCommand = subparser $
     command "<list>" (parseCreateList `withInfo` "create a new list") <>
     command "<list>" (parseShowList `withInfo` "show items in a list") <>
-    command "delete <list>" (parseDeleteList `withInfo` "delete a list")
+    command "delete" (parseDeleteList `withInfo` "delete a list")
 
 parseCreateList :: Parser Command
 parseCreateList = CreateList
