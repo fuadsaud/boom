@@ -1,6 +1,10 @@
 module Main where
 
-import Lib
+import Boom
 
 main :: IO ()
-main = someFunc
+main = withOptions $ \(Options app cmd) -> do
+    case cmd of
+        CreateList l -> putStrLn l
+        ShowList l -> putStrLn l
+        DeleteList l -> putStrLn l

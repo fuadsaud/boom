@@ -1,4 +1,3 @@
-module Boom where
+module Boom (module X) where
 
-version :: String
-version = "0.1.0"
+import Boom.Options as X
