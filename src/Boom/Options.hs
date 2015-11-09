@@ -15,7 +15,7 @@ data Command
         = All
         | Edit
         | CreateList List
-        | ShowList List
+        | DisplayList List
         | DeleteList List
 
 withOptions :: (Options -> IO ()) -> IO ()
@@ -30,16 +30,16 @@ parseOptions = Options <$> parseCommand
 
 parseCommand :: Parser Command
 parseCommand = subparser $
-    command "<list>" (parseCreateList `withInfo` "create a new list") <>
-    command "<list>" (parseShowList `withInfo` "show items in a list") <>
+    command "create" (parseCreateList `withInfo` "create a new list") <>
+    command "show" (parseDisplayList `withInfo` "show items in a list") <>
     command "delete" (parseDeleteList `withInfo` "delete a list")
 
 parseCreateList :: Parser Command
 parseCreateList = CreateList
     <$> argument str (metavar "LISTNAME")
 
-parseShowList :: Parser Command
-parseShowList = ShowList
+parseDisplayList :: Parser Command
+parseDisplayList = DisplayList
     <$> argument str (metavar "LISTNAME")
 
 parseDeleteList :: Parser Command

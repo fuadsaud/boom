@@ -1,10 +1,12 @@
 module Main where
 
 import Boom
+import Boom.JSON
 
 main :: IO ()
-main = withOptions $ \(Options cmd) -> do
-    case cmd of
-        CreateList l -> putStrLn l
-        ShowList l -> putStrLn l
-        DeleteList l -> putStrLn l
+main = doIt
+-- main = withOptions $ \(Options cmd) -> do
+--     case cmd of
+--         CreateList l -> createList l
+--         DisplayList l -> displayList l
+--         DeleteList l -> deleteList l
