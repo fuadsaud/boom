@@ -4,7 +4,9 @@ import Boom
 import Boom.JSON
 
 main :: IO ()
-main = doIt
+main = do
+    boomfile <- loadBoomfile "test/fixtures/boomfile"
+    print boomfile
 -- main = withOptions $ \(Options cmd) -> do
 --     case cmd of
 --         CreateList l -> createList l

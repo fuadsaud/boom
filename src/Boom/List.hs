@@ -12,7 +12,7 @@ displayList :: String -> IO ()
 displayList listName = do
     putStrLn $ "showing " ++ listName
 
-    doIt
+    print "hello"
 
 deleteList :: String -> IO ()
 deleteList listName = putStrLn $ "deleting " ++ listName

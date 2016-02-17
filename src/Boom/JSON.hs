@@ -6,7 +6,7 @@ import Data.Aeson as JSON
 import Data.Map (Map)
 import qualified Data.ByteString.Lazy as B
 
-data Boomfile = Boomfile (Map String List) deriving Show
+newtype Boomfile = Boomfile (Map String List) deriving Show
 newtype List = List (Map String String) deriving Show
 
 instance JSON.FromJSON List where
@@ -15,14 +15,10 @@ instance JSON.FromJSON List where
 instance JSON.FromJSON Boomfile where
     parseJSON = \case Object o -> (o .: "lists") >>= fmap Boomfile . parseJSON
 
-jsonFile :: FilePath
-jsonFile = "test/fixtures/Boomfile"
+getJSON :: FilePath -> IO B.ByteString
+getJSON path = B.readFile path
 
-getJSON :: IO B.ByteString
-getJSON = B.readFile jsonFile
-
-doIt :: IO ()
-doIt = do
-    str <- getJSON
-    print str
-    print (decode str :: Maybe Boomfile)
+loadBoomfile :: FilePath -> IO (Boomfile)
+loadBoomfile path = do
+    str <- getJSON path
+    maybe (ioError (userError"JSON")) return $ decode str
